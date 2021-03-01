@@ -36,17 +36,17 @@ class App extends React.Component {
   }
   
   render() {
-    // console.log(this.newsDetails, 'news');
+    // console.log(this.flightNews, 'news');
     return (
     <div className="container">
       <br/>
       <h1>Flight News</h1>
       <br/>
       <div>
-      <Details details={this.state.newsDetails}></Details> 
-        {/* {
+      {/* <Details details={this.state.newsDetails}></Details>  */}
+        {
         this.state.newsDetails ? <Details details={this.state.newsDetails}></Details> : <h1>loading</h1>
-        } */}
+        }
       </div>
     <br/>
     <div className="App">

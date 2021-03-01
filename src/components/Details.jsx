@@ -22,20 +22,19 @@ export default class Details extends Component {
   // }
   render() {
     let { details } = this.props
-    console.log(details, "dari render detials");
     return (
       <div>
         <Card className="text-center">
           <Card.Header>news Details</Card.Header>
-          <Card.Img variant="top" src={details.imageUrl}/>
+          <Card.Img variant="top" src={details.imageUrl} style={{ width: '50rem', height: '30rem', margin: '0% auto' }}/>
           <Card.Body>
-            <Card.Title>{this.details.title}</Card.Title>
+            <Card.Title>{details.title}</Card.Title>
             <Card.Text>
               {details.summary}
             </Card.Text>
-            <Button href={this.details.url} variant="primary">read full news</Button>
+            <Button href={details.url} variant="primary">read full news</Button>
           </Card.Body>
-          <Card.Footer className="text-muted">{details.updatedAt}</Card.Footer>
+          <Card.Footer className="text-muted">{details.updatedAt.split('T')[0]}</Card.Footer>
         </Card>
       </div>
     )
