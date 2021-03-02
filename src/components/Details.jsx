@@ -34,7 +34,7 @@ export default class Details extends Component {
             </Card.Text>
             <Button href={details.url} variant="primary">read full news</Button>
           </Card.Body>
-          <Card.Footer className="text-muted">{details.updatedAt.split('T')[0]}</Card.Footer>
+          <Card.Footer className="text-muted">{details.updatedAt}</Card.Footer>
         </Card>
       </div>
     )
