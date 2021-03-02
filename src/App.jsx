@@ -1,6 +1,6 @@
 import './App.css';
 import Flight from './components/Flight'
-// import Details from './components/Details'
+import Details from './components/Details'
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
@@ -21,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
-  const [url, setUrl]  = 'https://test.spaceflightnewsapi.net/api/v2/articles?_limit=12'
+  const [url, setUrl] = useState('https://test.spaceflightnewsapi.net/api/v2/articles?_limit=12')
   const [data, loading, error] = useFetch(url)
+  const [details, setDetails] = useState({})
+  const classes = useStyles();
+  
   // const [flightNews, setFlightNews] = useState([])
   // const [loading, setLoading] = useState(true)
-  const classes = useStyles();
-
   // useEffect(() => {
   //   setLoading(true)
   //   fetch('https://test.spaceflightnewsapi.net/api/v2/articles?_limit=12')
@@ -36,38 +37,41 @@ function App() {
   //     )
   //     .finally(setLoading(false))
   // }, [])
-  
+  const getDetails = (id) => {
+    fetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setDetails(data)
+      })
+    
+  }
   return (
     <>
-    <Container maxWidth="xl">
-
-      {/* <div className="container-main"> */}
-      <br/>
-        <h1>Space Flight News</h1>
-      <br/>
-      <div>
-      {/* <Details details={this.state.newsDetails}></Details>  */}
-        {/* {
-        loading ?  <h1>loading News</h1> : <Details details={newsDetails}></Details> 
-        } */}
-      </div>
-      <br/>
-      {
-        loading ? <h3>loading News...</h3> :
-        <div className={classes.root}>
-          <Grid container spacing={1}>
-            {/* <Grid item xs={4}> */}
-              <Grid container item xs={12} spacing={6}>
-              {data.map((news) => (
-              <Flight news={news} key={news.id}/>
-              ))}
-            {/* </Grid> */}
-            </Grid>
-          </Grid>
+      <Container maxWidth="xl">
+        <br/>
+          <h1>Space Flight News</h1>
+        <br/>
+        <div>
+        {/* <Details details={this.state.newsDetails}></Details>  */}
+          {
+          details ? <Details details={details}></Details> : <h1>loading News</h1>  
+          }
         </div>
-
-      }
-    </Container>
+        <br/>
+        {
+          loading ? <h3>loading News...</h3> :
+          <div className={classes.root}>
+            <Grid container spacing={1}>
+                <Grid container item xs={12} spacing={6}>
+                {data.map((news) => (
+                <Flight news={news} key={news.id} getDetails={getDetails} />
+                ))}
+              </Grid>
+            </Grid>
+          </div>
+        }
+      </Container>
     </>
   )
 }

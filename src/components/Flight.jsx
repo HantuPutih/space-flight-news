@@ -20,13 +20,14 @@ const useStyles = makeStyles({
 
 export default function ImgMediaCard(props) {
   const classes = useStyles();
+  // const [id, setId] = props.details(null)
 
   return (
     // cardaction nanti akan link ke details, sementara ke news originalnya dulu
     //href={props.news.url}
     <Grid item xs={3}>
       <Card className={classes.root}  >
-        <CardActionArea style={{ height: '400px' }} onClick={() => console.log(props.news.id)}>
+        <CardActionArea style={{ height: '400px' }} onClick={() => props.getDetails(props.news.id)}>
           <CardMedia
             component="img"
             alt={props.news.title}
@@ -38,17 +39,8 @@ export default function ImgMediaCard(props) {
             <Typography gutterBottom variant="h5" component="h2">
               {props.news.title}
             </Typography>
-            {/* <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-            </Typography> */}
           </CardContent>
         </CardActionArea>
-        {/* <CardActions>
-          <Button size="small" color="primary">
-            Details
-          </Button>
-        </CardActions> */}
       </Card>
     </Grid>
   );
