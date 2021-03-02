@@ -22,9 +22,7 @@ function useFetch(url) {
         console.log(error, 'dari useFetch error');
       })
       .finally(
-        setTimeout(() => {
           setLoading(false)
-        }, 1000)
       )
   }, [url])
   

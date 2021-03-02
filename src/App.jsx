@@ -1,6 +1,7 @@
 import './App.css';
 import Flight from './components/Flight'
 import Details from './components/Details'
+import Loading from './views/Loading'
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
@@ -41,7 +42,6 @@ function App() {
     fetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setDetails(data)
       })
     
@@ -54,13 +54,12 @@ function App() {
         <br/>
         <div>
         {/* <Details details={this.state.newsDetails}></Details>  */}
-          {
-          details ? <Details details={details}></Details> : <h1>loading News</h1>  
-          }
+          
+          <Details details={details}></Details>
         </div>
         <br/>
         {
-          loading ? <h3>loading News...</h3> :
+          loading ? <Loading></Loading>:
           <div className={classes.root}>
             <Grid container spacing={1}>
                 <Grid container item xs={12} spacing={6}>
