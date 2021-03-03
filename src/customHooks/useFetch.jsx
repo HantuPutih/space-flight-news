@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function useFetch(url) {
   const [data, setData] = useState([])
@@ -22,7 +22,9 @@ function useFetch(url) {
         console.log(error, 'dari useFetch error');
       })
       .finally(
+        setTimeout(() => {
           setLoading(false)
+        }, 1000)
       )
   }, [url])
   

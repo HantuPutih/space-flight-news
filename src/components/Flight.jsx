@@ -2,13 +2,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-// import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import { useHistory } from "react-router-dom"
+
 
 
 const useStyles = makeStyles({
@@ -19,15 +19,17 @@ const useStyles = makeStyles({
 });
 
 export default function ImgMediaCard(props) {
+  let history = useHistory();
   const classes = useStyles();
   // const [id, setId] = props.details(null)
-
+  const getDetails = () => {
+    history.push(`/details/${props.news.id}`)
+  }
   return (
     // cardaction nanti akan link ke details, sementara ke news originalnya dulu
-    //href={props.news.url}
     <Grid item xs={3}>
       <Card className={classes.root}  >
-        <CardActionArea style={{ height: '400px' }} onClick={() => props.getDetails(props.news.id)}>
+        <CardActionArea style={{ height: '400px' }} onClick={getDetails}>
           <CardMedia
             component="img"
             alt={props.news.title}
@@ -45,69 +47,3 @@ export default function ImgMediaCard(props) {
     </Grid>
   );
 }
-
-
-// import React from 'react'
-// import Card from 'react-bootstrap/Card'
-// import Button from 'react-bootstrap/Button';
-
-// function Flight(props) {
-//   // const [news,setNews] = props
-//   return (
-//     <React.Fragment>
-//       {
-//         props.news && 
-//         <div className="col">
-//           <Card style={{ width: '18rem', minheight: '27rem'}} key={props.news.id}>
-//             <Card.Img variant="top" src={props.news.imageUrl}/>
-//             <Card.Body>
-//               <Card.Title>{props.news.title}</Card.Title>
-//               <Card.Text>
-//                 date: {props.news.updatedAt.split('T')[0]}
-//               </Card.Text>
-//               <Button variant="primary" onClick={() => this.getDetails(props.news.id)}>news Details</Button>
-//             </Card.Body>
-//           </Card>
-//         </div>
-//       }
-//     </React.Fragment>
-//   )
-// }
-
-// export default Flight
-
-// import React, { Component } from 'react'
-// import Card from 'react-bootstrap/Card'
-// import Button from 'react-bootstrap/Button';
-
-// export default class News extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       // detailId: this.props.id
-//     }
-//   }
-//   getDetails = (id) => {
-//     // console.log(id)
-//     this.props.getDetails(id)
-//   }
-//   render() {
-//     // console.log(this.props.news);
-//     let { news } = this.props
-//       return (
-//         this.props.news && 
-//         <div className="col">
-//           <Card style={{ width: '18rem', minheight: '27rem'}} key={news.id}>
-//             <Card.Img variant="top" src={news.imageUrl}/>
-//             <Card.Body>
-//               <Card.Title>{news.title}</Card.Title>
-//               <Card.Text>
-//                 date: {news.updatedAt.split('T')[0]}
-//               </Card.Text>
-//               <Button variant="primary" onClick={() => this.getDetails(news.id)}>news Details</Button>
-//             </Card.Body>
-//           </Card>
-//         </div>
-//       )
-//   }
-// }
