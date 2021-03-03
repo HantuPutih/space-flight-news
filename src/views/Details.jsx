@@ -1,87 +1,14 @@
-// import { useParams } from 'react-router-dom'
-// import React from 'react'
-// import useFetch from '../customHooks/useFetch'
-// import { makeStyles } from '@material-ui/core/styles'
-// import Paper from '@material-ui/core/Paper'
-// import Grid from '@material-ui/core/Grid'
-// import CardMedia from '@material-ui/core/CardMedia'
-
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   paper: {
-//     padding: theme.spacing(2),
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary,
-//   },
-//   Card: {
-//     width: 300,
-//     margin: 'auto'
-//   },
-//   Media: {
-//     height: '90%',
-//     width: '90%',
-//     margin: '0 auto',
-//     borderRadius: '5',
-//   }
-// }));
-
-// function Details() {
-//   const classes = useStyles();
-//   const { id } = useParams()
-//   const [data, loading] = useFetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
-//   return (
-//     <React.Fragment>
-//       {/* <p>
-//         {JSON.stringify(data)}
-//       </p> */}
-//       <div className={classes.root}>
-//       <Grid container spacing={3}>
-//         <Grid item xs={12}>
-//           <CardMedia 
-//           className={`${classes.paper} ${classes.Media}`}
-//             component="img"
-//             alt={data.title}
-//             height="500"
-//             image={data.imageUrl}
-//             title={data.title}
-//           />
-//         </Grid>
-//         <Grid item xs={12} sm={6}>
-//           <Paper className={classes.paper}>{data.title}</Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={6}>
-//           <Paper className={classes.paper}>{data.summary}</Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={6}>
-//           <Paper className={classes.paper}> published At: {Date(data.publishedAt)}</Paper>
-//         </Grid>
-//         <Grid item xs={12} sm={6}>
-//           <Paper className={classes.paper}>{data.newsSite}</Paper>
-//         </Grid>
-//       </Grid>
-//     </div>
-//       {
-//         // loading ? <Loading></Loading>: <iframe src={data.url} height="720 " width="1280" title="Iframe Example"></iframe> 
-
-//       }
-      
-//     </React.Fragment>
-//   )
-// }
-
-// export default Details
-
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
 import { useParams } from 'react-router-dom'
-import useFetch from '../customHooks/useFetch'
+// import useFetch from '../customHooks/useFetch'
 import CardMedia from '@material-ui/core/CardMedia'
 import Loading from '../views/Loading'
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container'
+import {changeData} from '../store/actions'
+import { useSelector, useDispatch } from 'react-redux'
+
 
 
 
@@ -109,15 +36,41 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Details() {
+  const dispatch = useDispatch()
+  const data = useSelector(state => state.data)
   const classes = useStyles();
   const { id } = useParams()
-  const [data, loading] = useFetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
+  const [loading, setLoading] = useState(false)
+  
+  useEffect(() => {
+    setLoading(true)
+    fetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.statusText)
+        }
+        return res.json()
+      })
+      .then(data => 
+        dispatch(changeData(data))
+      )
+      .catch(error => {
+        console.log(error, 'dari useFetch error');
+      })
+      .finally(
+        // setTimeout(() => {
+          setLoading(false)
+        // }, 1000)
+      )
+  }, [])
 
   return (
     <>
       <h1>News details </h1>
         <div className={classes.root}>
           <Paper elevation={3}>
+            <br/>
+            <br/>
             <br/>
             {
               loading ? <Loading></Loading> :
@@ -137,9 +90,12 @@ export default function Details() {
                 <p>
                   {data.summary}
                 </p>  
-                <pre>
-                  published At: {data.publishedAt}
-                </pre>
+                  {
+                    data.publishedAt ?
+                    <pre>
+                      published At: {data.publishedAt.split('T')[0]}
+                    </pre> : null
+                  }
               </Container>
               
             </React.Fragment>
