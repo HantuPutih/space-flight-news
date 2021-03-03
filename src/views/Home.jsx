@@ -3,7 +3,6 @@ import Flight from '../components/Flight'
 import Loading from '../views/Loading'
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-// import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import useFetch from '../customHooks/useFetch'
@@ -29,6 +28,8 @@ function Home() {
   return (
     <>
       <Container maxWidth="xl">
+        <h1>Space Flight news </h1>
+
         {/* <br/>
           <h1>Space Flight News</h1>
         <br/> */}

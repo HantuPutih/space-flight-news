@@ -148,3 +148,6 @@ h1{
   text-align: center;
   justify-content: center
 }
+.divider-card{
+  margin-bottom: 100px !important;
+}

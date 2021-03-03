@@ -23,7 +23,7 @@ export default function ImgMediaCard(props) {
   const classes = useStyles();
   // const [id, setId] = props.details(null)
   const getDetails = () => {
-    history.push(`/details/${props.news.id}`)
+    history.push(`/news/${props.news.id}`)
   }
   return (
     // cardaction nanti akan link ke details, sementara ke news originalnya dulu
