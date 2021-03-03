@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Flight from '../components/Flight'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
 
 
@@ -24,17 +25,20 @@ function Favorite() {
   // console.log(saved);
   return (
     <div>
-      <h1>isinya fav dari user</h1>
-      {/* <p>{JSON.stringify(saved)}</p> */}
-      <div className={classes.root}>
-        <Grid container spacing={1}>
-            <Grid container item xs={12} spacing={6}>
-            {saved.map((news) => (
-            <Flight news={news} key={news.id} />
-            ))}
+      <Container maxWidth="xl">
+        <h1>Saved News</h1>
+        {/* <p>{JSON.stringify(saved)}</p> */}
+        <div className={classes.root}>
+          <Grid container spacing={1}>
+              <Grid container item xs={12} spacing={6}>
+              {saved.map((news) => (
+              <Flight news={news} key={news.id} />
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </Container>
+      
     </div>
   )
 }

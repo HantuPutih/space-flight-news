@@ -6,3 +6,7 @@ export function changeData(payload) {
 export function addSave(payload) {
   return {type: 'SAVE/ADDSAVE', payload }
 }
+
+export function setPage(payload) {
+  return {type: 'PAGE/CHANGEPAGE', payload}
+}

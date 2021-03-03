@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom"
 import Button from '@material-ui/core/Button'
 import { useSelector, useDispatch } from 'react-redux'
 import {addSave} from '../store/actions'
+import Swal from 'sweetalert2'
 
 
 const useStyles = makeStyles({
@@ -24,14 +25,31 @@ export default function ImgMediaCard(props) {
   const dispatch = useDispatch()
   let history = useHistory();
   const classes = useStyles();
-  // const [id, setId] = props.details(null)
+  const saved = useSelector(state => state.saved)
+  const page = useSelector(state => state.page)
   const getDetails = () => {
     history.push(`/news/${props.news.id}`)
   }
   const onSave = () => {
-    // console.log(props.news, 'dari onsave');
-    dispatch(addSave(props.news))
-    history.push('/saved')
+    let flag = false
+    for (let i = 0; i < saved.length; i++) {
+      if (saved[i].id === props.news.id) {
+        flag = true
+        console.log('duplicate saved')
+        Swal.fire('Item already in saved')
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Item already in Saved News!',
+        })
+      } 
+    }
+    if (!flag) {
+      dispatch(addSave(props.news))
+      Swal.fire('Added to Saved News')
+      // history.push('/saved')
+    }
+    
   }
   return (
     // cardaction nanti akan link ke details, sementara ke news originalnya dulu
@@ -51,9 +69,13 @@ export default function ImgMediaCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <Button size="large" color="primary" onClick={onSave}>
+        {
+          page === 'home' ? 
+          <Button size="large" color="primary" onClick={onSave}>
           Save News
-        </Button>
+        </Button> : null
+        }
+        
       </Card>
     </Grid>
   );

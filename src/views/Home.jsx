@@ -49,13 +49,14 @@ function Home() {
   
 
   const classes = useStyles();
+  console.log(data)
   return (
     <>
       <Container maxWidth="xl">
         <h1>Space Flight news </h1>
         <br/>
         {
-          data ? <div className={classes.root}>
+          data.length !== 0 ? <div className={classes.root}>
             <Grid container spacing={1}>
                 <Grid container item xs={12} spacing={6}>
                 {data.map((news) => (

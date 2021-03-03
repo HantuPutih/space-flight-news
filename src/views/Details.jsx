@@ -40,10 +40,10 @@ export default function Details() {
   const data = useSelector(state => state.data)
   const classes = useStyles();
   const { id } = useParams()
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   
   useEffect(() => {
-    setLoading(true)
+    // setLoading(true)
     fetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
       .then((res) => {
         if (!res.ok) {
@@ -57,11 +57,11 @@ export default function Details() {
       .catch(error => {
         console.log(error, 'dari useFetch error');
       })
-      .finally(
-        // setTimeout(() => {
-          setLoading(false)
-        // }, 1000)
-      )
+      // .finally(
+      //   // setTimeout(() => {
+      //     setLoading(false)
+      //   // }, 1000)
+      // )
   }, [])
 
   return (
@@ -73,7 +73,7 @@ export default function Details() {
             <br/>
             <br/>
             {
-              loading ? <Loading></Loading> :
+              // loading ? <Loading></Loading> :
               <React.Fragment>
               <CardMedia 
               className={`${classes.paper} ${classes.Media}`}

@@ -2,7 +2,8 @@ import { createStore } from 'redux'
 
 const initialState = {
   data: [],
-  saved: [] // ini di add
+  saved: [], // ini di add
+  page: 'home'
 }
 
 function reducer(state = initialState, action) {
@@ -13,6 +14,8 @@ function reducer(state = initialState, action) {
       //add saved
     case 'SAVE/ADDSAVE':
       return{...state, saved: [...state.saved, payload]}
+    case 'PAGE/CHANGEPAGE':
+      return {...state, page: payload}
     default:
       return state
   }
