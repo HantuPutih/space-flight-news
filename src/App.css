@@ -144,9 +144,12 @@ body {
   }
 }
 
-h1{
+.middleText{
   text-align: center;
   justify-content: center
+}
+.middleText h2 {
+  color: lightgray;
 }
 .divider-card{
   margin-bottom: 100px !important;

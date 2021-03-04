@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Flight from '../components/Flight'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
@@ -21,24 +21,30 @@ const useStyles = makeStyles((theme) => ({
 
 function Favorite() {
   const classes = useStyles();
-  const saved = useSelector(state => state.saved)
-  // console.log(saved);
+  const saved = useSelector(state => state.saved.saved)
   return (
     <div>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
+      <div className="middleText">
         <h1>Saved News</h1>
-        {/* <p>{JSON.stringify(saved)}</p> */}
-        <div className={classes.root}>
-          <Grid container spacing={1}>
-              <Grid container item xs={12} spacing={6}>
-              {saved.map((news) => (
-              <Flight news={news} key={news.id} />
-              ))}
+      </div>
+        {
+          saved.length !== 0 ?
+          <div className={classes.root}>
+            <Grid container spacing={1}>
+                <Grid container item xs={12} spacing={6}>
+                {saved.map((news) => (
+                <Flight news={news} key={news.id} />
+                ))}
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
+          : 
+          <div className="middleText">
+            <h2>saved is empty</h2>
+          </div>
+        }
       </Container>
-      
     </div>
   )
 }

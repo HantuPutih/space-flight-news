@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import { useParams } from 'react-router-dom'
-// import useFetch from '../customHooks/useFetch'
 import CardMedia from '@material-ui/core/CardMedia'
 import Loading from '../views/Loading'
 import Container from '@material-ui/core/Container'
-import {changeData} from '../store/actions'
+import {fetchDetail} from '../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
-
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,67 +34,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Details() {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.data)
+  const { detail, detailLoading } = useSelector(state => state.flight)
   const classes = useStyles();
   const { id } = useParams()
-  // const [loading, setLoading] = useState(false)
   
   useEffect(() => {
-    // setLoading(true)
-    fetch(`https://test.spaceflightnewsapi.net/api/v2/articles/${id}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw Error(res.statusText)
-        }
-        return res.json()
-      })
-      .then(data => 
-        dispatch(changeData(data))
-      )
-      .catch(error => {
-        console.log(error, 'dari useFetch error');
-      })
-      // .finally(
-      //   // setTimeout(() => {
-      //     setLoading(false)
-      //   // }, 1000)
-      // )
-  }, [])
+    dispatch(fetchDetail(id))
+  }, [dispatch, id])
 
   return (
     <>
+    <div className="middleText">
       <h1>News details </h1>
+    </div>
         <div className={classes.root}>
           <Paper elevation={3}>
             <br/>
             <br/>
             <br/>
             {
-              // loading ? <Loading></Loading> :
+              detailLoading ? <Loading></Loading> :
               <React.Fragment>
               <CardMedia 
               className={`${classes.paper} ${classes.Media}`}
                 component="img"
-                alt={data.title}
+                alt={detail.title}
                 height="500"
-                image={data.imageUrl}
-                title={data.title}
+                image={detail.imageUrl}
+                title={detail.title}
               />
               <Container maxWidth="md">
                 <h2>
-                  {data.title}
+                  {detail.title}
                 </h2>
                 <p>
-                  {data.summary}
+                  {detail.summary}
                 </p>  
                   {
-                    data.publishedAt ?
+                    detail.publishedAt ?
                     <pre>
-                      published At: {data.publishedAt.split('T')[0]}
+                      published At: {detail.publishedAt.split('T')[0]}
                     </pre> : null
                   }
+                  {
+                    detail.newsSite ? 
+                    <React.Fragment>
+                      <pre>
+                        News Site: <a href={detail.url} rel="noreferrer" target="_blank">{detail.newsSite}</a> 
+                      </pre>
+                    </React.Fragment> : null
+                  }
               </Container>
-              
             </React.Fragment>
             } 
             <br/>
@@ -108,3 +95,4 @@ export default function Details() {
     </>
   );
 }
+

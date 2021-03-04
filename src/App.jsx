@@ -11,14 +11,12 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import {setPage} from './store/actions'
-import { useSelector, useDispatch } from 'react-redux'
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink
+  NavLink,
 } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function App() {
-  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,11 +38,7 @@ export default function App() {
     setAnchorEl(null);
   };
 
-  const onSaved = (page) => {
-    dispatch(setPage(page))
-  }
-
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <Router>
       <div className={classes.root}>
@@ -66,9 +59,8 @@ export default function App() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}><NavLink onClick={() => onSaved('home')} style={{textDecoration: "none", color: "#242424"}} to="/">Home</NavLink></MenuItem>
-        <MenuItem onClick={handleClose}><NavLink onClick={() => onSaved('flight')} style={{textDecoration: "none", color: "#242424"}} to="/saved">Saved News</NavLink></MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}><NavLink  style={{textDecoration: "none", color: "#242424"}} to="/">Home</NavLink></MenuItem>
+        <MenuItem onClick={handleClose}><NavLink  style={{textDecoration: "none", color: "#242424"}} to="/saved">Saved News</NavLink></MenuItem>
       </Menu>
     </div>
       <div>

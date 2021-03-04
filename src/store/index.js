@@ -1,26 +1,13 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import reducerSaved from './reducers/save'
+import reducerFlight from './reducers/flight'
+import thunk from 'redux-thunk'
 
-const initialState = {
-  data: [],
-  saved: [], // ini di add
-  page: 'home'
-}
+const rootReducer = combineReducers({
+  saved: reducerSaved,
+  flight: reducerFlight,
+})
 
-function reducer(state = initialState, action) {
-  const { type, payload } = action
-  switch (type) {
-    case 'DATA/CHANGEDATA':
-      return {...state, data: payload}
-      //add saved
-    case 'SAVE/ADDSAVE':
-      return{...state, saved: [...state.saved, payload]}
-    case 'PAGE/CHANGEPAGE':
-      return {...state, page: payload}
-    default:
-      return state
-  }
-}
-
-const store = createStore(reducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default store

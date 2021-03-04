@@ -12,6 +12,10 @@ import Button from '@material-ui/core/Button'
 import { useSelector, useDispatch } from 'react-redux'
 import {addSave} from '../store/actions'
 import Swal from 'sweetalert2'
+import CardActions from '@material-ui/core/CardActions'
+import {
+  useLocation
+} from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -22,11 +26,12 @@ const useStyles = makeStyles({
 });
 
 export default function ImgMediaCard(props) {
+  let location = useLocation();
+  // console.log(location.pathname)
   const dispatch = useDispatch()
-  let history = useHistory();
-  const classes = useStyles();
-  const saved = useSelector(state => state.saved)
-  const page = useSelector(state => state.page)
+  let history = useHistory()
+  const classes = useStyles()
+  const saved = useSelector(state => state.saved.saved)
   const getDetails = () => {
     history.push(`/news/${props.news.id}`)
   }
@@ -36,7 +41,6 @@ export default function ImgMediaCard(props) {
       if (saved[i].id === props.news.id) {
         flag = true
         console.log('duplicate saved')
-        Swal.fire('Item already in saved')
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -52,7 +56,6 @@ export default function ImgMediaCard(props) {
     
   }
   return (
-    // cardaction nanti akan link ke details, sementara ke news originalnya dulu
     <Grid item xs={3}>
       <Card className={classes.root}  >
         <CardActionArea style={{ height: '400px' }} onClick={getDetails}>
@@ -69,12 +72,15 @@ export default function ImgMediaCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-        {
-          page === 'home' ? 
-          <Button size="large" color="primary" onClick={onSave}>
-          Save News
-        </Button> : null
-        }
+        <CardActions>
+          {
+            location.pathname === '/' ? 
+            <Button size="large" color="primary" onClick={onSave}>
+              Save News
+            </Button> : null
+          }
+        </CardActions>
+        
         
       </Card>
     </Grid>
