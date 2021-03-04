@@ -8,11 +8,10 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import SearchIcon from '@material-ui/icons/Search'
 import {DebounceInput} from 'react-debounce-input'
 import {search} from '../store/actions'
 import { useDispatch } from 'react-redux'
-
+import {fetchFlight} from '../store/actions'
 
 import {
   NavLink
@@ -88,6 +87,10 @@ function Navbar() {
     console.log('do validate')
     dispatch(search(value))
   }
+  const onHome = () => {
+    dispatch(fetchFlight())
+  }
+  
   const classes = useStyles()
   return (
     <div>
@@ -101,17 +104,12 @@ function Navbar() {
             Space Flight News
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
             <DebounceInput
             placeholder="Search by spesific field…"
             minLength={3}
             debounceTimeout={2000}
-            // onKeyDown={event => handleSearch({value: event.target.value})}
             onChange={event => handleSearch({value: event.target.value})} 
             />
-            
           </div>
         </Toolbar>
       </AppBar>
@@ -122,7 +120,7 @@ function Navbar() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}><NavLink  style={{textDecoration: "none", color: "#242424"}} to="/">Home</NavLink></MenuItem>
+        <MenuItem onClick={handleClose}><NavLink  style={{textDecoration: "none", color: "#242424"}} to="/" onClick={onHome}>Home</NavLink></MenuItem>
         <MenuItem onClick={handleClose}><NavLink  style={{textDecoration: "none", color: "#242424"}} to="/saved">Saved News</NavLink></MenuItem>
       </Menu>
     </div>

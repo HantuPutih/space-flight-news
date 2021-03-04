@@ -5,14 +5,10 @@ import Home from './views/Home'
 import Navbar from './components/Navbar'
 import './App.css'
 
-
 import {
-  // BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-
-
 
 export default function App() {
   return (

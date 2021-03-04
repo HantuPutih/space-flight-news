@@ -1,7 +1,7 @@
 
 import Flight from '../components/Flight'
 import Loading from './Loading'
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
@@ -25,11 +25,14 @@ function Home() {
 
   const dispatch = useDispatch()
   const { flight, flightLoading, search } = useSelector(state => state.flight)
-  let data = search.length !== 0 ? search : flight
+  const [data, setData] = useState(flight)
   useEffect(() => {
     dispatch(fetchFlight())
   }, [dispatch])
   
+  useEffect(() => {
+    setData(search.length !== 0 ? search : flight)
+  }, [search, flight])
 
   const classes = useStyles();
   return (
@@ -43,7 +46,7 @@ function Home() {
           !flightLoading ? 
           <div className={classes.root}>
             <Grid container spacing={1}>
-                <Grid container item xs={12} spacing={6}>
+              <Grid container item xs={12} spacing={6}>
                 {data.map((news) => (
                 <Flight news={news} key={news.id} />
                 ))}

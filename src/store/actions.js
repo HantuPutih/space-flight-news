@@ -88,7 +88,7 @@ export function search(payload) {
       return res.json()
     })
     .then(data => {
-      console.log(data)
+      // console.log(data)
       dispatch(setSearch(data))
     })
     .catch(error => {
