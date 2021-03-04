@@ -7,15 +7,15 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import Button from '@material-ui/core/Button'
 import { useSelector, useDispatch } from 'react-redux'
 import {addSave} from '../store/actions'
 import Swal from 'sweetalert2'
 import CardActions from '@material-ui/core/CardActions'
-import {
-  useLocation
-} from "react-router-dom";
+// import {
+//   useLocation
+// } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -27,11 +27,11 @@ const useStyles = makeStyles({
 
 export default function ImgMediaCard(props) {
   let location = useLocation();
-  // console.log(location.pathname)
   const dispatch = useDispatch()
   let history = useHistory()
   const classes = useStyles()
   const saved = useSelector(state => state.saved.saved)
+  
   const getDetails = () => {
     history.push(`/news/${props.news.id}`)
   }
@@ -51,7 +51,6 @@ export default function ImgMediaCard(props) {
     if (!flag) {
       dispatch(addSave(props.news))
       Swal.fire('Added to Saved News')
-      // history.push('/saved')
     }
     
   }

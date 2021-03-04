@@ -1,3 +1,5 @@
+const queryString = require('query-string')
+
 export function addSave(payload) {
   return {type: 'SAVE/ADDSAVE', payload }
 }
@@ -22,6 +24,11 @@ export const setDetailLoading = (payload) => ({
   payload
 })
 
+export const setSearch = (payload) => ({
+  type: 'SEARCH/SETSEARCH',
+  payload
+})
+
 
 
 export function fetchFlight(payload) {
@@ -38,7 +45,7 @@ export function fetchFlight(payload) {
       dispatch(setFlight(data))
     )
     .catch(error => {
-      console.log(error, 'dari useFetch error');
+      console.log(error, 'dari useFetch error')
     })
     .finally(
       dispatch(setFlightLoading(false))
@@ -62,7 +69,7 @@ export function fetchDetail(id) {
       dispatch(setDetail(data))
     )
     .catch(error => {
-      console.log(error, 'dari useFetch error');
+      console.log(error, 'dari useFetch error')
     })
     .finally(
       dispatch(setDetailLoading(false))
@@ -70,3 +77,22 @@ export function fetchDetail(id) {
   }
 }
 
+export function search(payload) {
+  return dispatch => {
+    let value = queryString.stringify(payload).split('=')[1]
+    fetch(`https://test.spaceflightnewsapi.net/api/v2/articles?_limit=12&_sort=${value}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw Error(res.statusText)
+      }
+      return res.json()
+    })
+    .then(data => {
+      console.log(data)
+      dispatch(setSearch(data))
+    })
+    .catch(error => {
+      console.log(error, 'dari useFetch error')
+    })
+  }
+}

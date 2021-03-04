@@ -1,6 +1,6 @@
 
 import Flight from '../components/Flight'
-import Loading from '../views/Loading'
+import Loading from './Loading'
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -24,36 +24,33 @@ function Home() {
 
 
   const dispatch = useDispatch()
-  const { flight, flightLoading } = useSelector(state => state.flight)
-  
+  const { flight, flightLoading, search } = useSelector(state => state.flight)
+  let data = search.length !== 0 ? search : flight
   useEffect(() => {
     dispatch(fetchFlight())
   }, [dispatch])
   
 
   const classes = useStyles();
-  // console.log(flight)
   return (
     <>
       <Container maxWidth="xl">
       <div className="middleText">
         <h1>Space Flight News </h1>
       </div>
-        
         <br/>
         {
           !flightLoading ? 
           <div className={classes.root}>
             <Grid container spacing={1}>
                 <Grid container item xs={12} spacing={6}>
-                {flight.map((news) => (
+                {data.map((news) => (
                 <Flight news={news} key={news.id} />
                 ))}
               </Grid>
             </Grid>
           </div> 
           : <Loading />
-          
         }
       </Container>
     </>

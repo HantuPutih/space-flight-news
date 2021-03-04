@@ -32,7 +32,7 @@ function Favorite() {
           saved.length !== 0 ?
           <div className={classes.root}>
             <Grid container spacing={1}>
-                <Grid container item xs={12} spacing={6}>
+              <Grid container item xs={12} spacing={6}>
                 {saved.map((news) => (
                 <Flight news={news} key={news.id} />
                 ))}
